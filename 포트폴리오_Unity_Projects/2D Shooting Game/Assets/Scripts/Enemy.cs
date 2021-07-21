@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
 
     public GameObject bulletA;
     public GameObject bulletB;
+    public GameObject[] items;
     float curFireDelay;
     float maxFireDelay;
 
@@ -70,7 +71,7 @@ public class Enemy : MonoBehaviour
         curFireDelay += Time.deltaTime;
     }
 
-    void OnHit(int damage)
+    public void OnHit(int damage)
     {
         health -= damage;
         spriteRenderer.sprite = sprites[1];
@@ -80,6 +81,13 @@ public class Enemy : MonoBehaviour
         {
             Player playerLogic = player.GetComponent<Player>();
             playerLogic.score += enemyScore;
+            // 아이템 드랍
+            int random = Random.Range(0, 10);
+            if(random < 3)
+            {
+                int index = Random.Range(0, 3);
+                Instantiate(items[index], transform.position, transform.rotation);
+            }
             Destroy(gameObject);
         }
     }

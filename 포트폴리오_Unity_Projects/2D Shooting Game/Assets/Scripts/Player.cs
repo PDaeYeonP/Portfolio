@@ -7,8 +7,13 @@ public class Player : MonoBehaviour
     // private 변경 예정 필드
     public GameObject bulletA;
     public GameObject bulletB;
+    public GameObject boomEffect;
     public float speed;
-    public int power;
+    int power;
+    int maxPower;
+    int boom;
+    int maxBoom;
+    bool isBoom;
     public GameManager manager;
     public int life;
     public int score;
@@ -28,6 +33,10 @@ public class Player : MonoBehaviour
         curFireDelay = 0.0f;
         maxFireDelay = 0.15f;
         power = 1;
+        maxPower = 3;
+        boom = 0;
+        maxBoom = 2;
+        isBoom = false;
     }
 
     void Update()
@@ -36,6 +45,8 @@ public class Player : MonoBehaviour
         Move();
         //발사
         Fire();
+        // 붐
+        Boom();
         //리로드
         Reload();
     }
@@ -61,6 +72,37 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Horizontal") || Input.GetButtonUp("Horizontal"))
         {
             anim.SetInteger("Input", (int)h);
+        }
+    }
+
+    void Boom()
+    {
+        if (!Input.GetButton("Fire2"))
+            return;
+
+        if (isBoom)
+            return;
+
+        if (boom == 0)
+            return;
+
+        boom--;
+        manager.UpdateBoomIcon(boom);
+        isBoom = true;
+        // 이펙트 켜기
+        boomEffect.SetActive(true);
+        Invoke("offBoomEffect", 3);
+        // 씬에 존재하는 에너미와 탄알 제거
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int index = 0; index < enemies.Length; index++)
+        {
+            Enemy enemyLogic = enemies[index].GetComponent<Enemy>();
+            enemyLogic.OnHit(1000);
+        }
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
+        for (int index = 0; index < bullets.Length; index++)
+        {
+            Destroy(bullets[index]);
         }
     }
 
@@ -153,6 +195,39 @@ public class Player : MonoBehaviour
             gameObject.SetActive(false);
             Destroy(collision.gameObject);
         }
+        else if(collision.gameObject.tag == "Item")
+        {
+            Item item = collision.gameObject.GetComponent<Item>();
+            switch(item.type)
+            {
+                case "Coin":
+                    score += 1000;
+                    break;
+                case "Power":
+                    if (power < maxPower)
+                        power++;
+                    else
+                        score += 300;
+                    break;
+                case "Boom":
+                    if (boom < maxBoom)
+                    {
+                        boom++;
+                        manager.UpdateBoomIcon(boom);
+                    }
+                    else
+                        score += 500;
+                    break;
+            }
+            // 먹은 아이템은 삭제
+            Destroy(collision.gameObject);
+        }
+    }
+
+    void offBoomEffect()
+    {
+        boomEffect.SetActive(false);
+        isBoom = false;
     }
 
     void OnTriggerExit2D(Collider2D collision)

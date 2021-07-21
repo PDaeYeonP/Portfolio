@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public Text scoreText;
     public Image[] lifeIcon;
+    public Image[] boomIcon;
     public GameObject gameOverSet;
 
     void Update()
@@ -69,6 +70,20 @@ public class GameManager : MonoBehaviour
             lifeIcon[index].color = new Color(1, 1, 1, 1);
         }
     }
+
+    public void UpdateBoomIcon(int boom)
+    {
+        for (int index = 0; index < 2; index++)
+        {
+            boomIcon[index].color = new Color(1, 1, 1, 0);
+        }
+
+        for (int index = 0; index < boom; index++)
+        {
+            boomIcon[index].color = new Color(1, 1, 1, 1);
+        }
+    }
+
 
     public void GameOver()
     {
