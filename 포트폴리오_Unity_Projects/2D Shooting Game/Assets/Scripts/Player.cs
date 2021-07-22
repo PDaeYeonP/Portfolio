@@ -14,7 +14,8 @@ public class Player : MonoBehaviour
     int boom;
     int maxBoom;
     bool isBoom;
-    public GameManager manager;
+    public GameManager gameManager;
+    public ObjectManager objectManager;
     public int life;
     public int score;
 
@@ -87,22 +88,53 @@ public class Player : MonoBehaviour
             return;
 
         boom--;
-        manager.UpdateBoomIcon(boom);
+        gameManager.UpdateBoomIcon(boom);
         isBoom = true;
         // 이펙트 켜기
         boomEffect.SetActive(true);
         Invoke("offBoomEffect", 3);
         // 씬에 존재하는 에너미와 탄알 제거
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        for (int index = 0; index < enemies.Length; index++)
+        GameObject[] enemiesLv1 = objectManager.GetPool("EnemyLv1");
+        GameObject[] enemiesLv2 = objectManager.GetPool("EnemyLv2");
+        GameObject[] enemiesLv3 = objectManager.GetPool("EnemyLv3");
+
+        for (int index = 0; index < enemiesLv1.Length; index++)
         {
-            Enemy enemyLogic = enemies[index].GetComponent<Enemy>();
-            enemyLogic.OnHit(1000);
+            if(enemiesLv1[index].activeSelf)
+            {
+                Enemy enemyLogic = enemiesLv1[index].GetComponent<Enemy>();
+                enemyLogic.OnHit(1000);
+            }
         }
-        GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
-        for (int index = 0; index < bullets.Length; index++)
+        for (int index = 0; index < enemiesLv2.Length; index++)
         {
-            Destroy(bullets[index]);
+            if (enemiesLv2[index].activeSelf)
+            {
+                Enemy enemyLogic = enemiesLv2[index].GetComponent<Enemy>();
+                enemyLogic.OnHit(1000);
+            }
+        }
+        for (int index = 0; index < enemiesLv3.Length; index++)
+        {
+            if (enemiesLv3[index].activeSelf)
+            {
+                Enemy enemyLogic = enemiesLv3[index].GetComponent<Enemy>();
+                enemyLogic.OnHit(1000);
+            }
+        }
+
+        GameObject[] bulletsA = objectManager.GetPool("EnemyBulletA");
+        GameObject[] bulletsB = objectManager.GetPool("EnemyBulletB");
+
+        for (int index = 0; index < bulletsA.Length; index++)
+        {
+            if(bulletsA[index].activeSelf)
+                bulletsA[index].SetActive(false);
+        }
+        for (int index = 0; index < bulletsB.Length; index++)
+        {
+            if (bulletsB[index].activeSelf)
+                bulletsB[index].SetActive(false);
         }
     }
 
@@ -125,7 +157,9 @@ public class Player : MonoBehaviour
         {
             case 1:
                 // 프리팹 복제생성
-                bulletC = Instantiate(bulletA, transform.position, transform.rotation);
+                // bulletC = Instantiate(bulletA, transform.position, transform.rotation);
+                bulletC = objectManager.MakeObject("PlayerBulletA");
+                bulletC.transform.position = transform.position;
                 // 리지드바디 할당
                 rigidC = bulletC.GetComponent<Rigidbody2D>();
                 // 발사
@@ -133,8 +167,10 @@ public class Player : MonoBehaviour
                 break;
             case 2:
                 // 좌우로 두발
-                bulletR = Instantiate(bulletA, transform.position + Vector3.right * 0.1f, transform.rotation);
-                bulletL = Instantiate(bulletA, transform.position + Vector3.left * 0.1f, transform.rotation);
+                bulletR = objectManager.MakeObject("PlayerBulletA");
+                bulletR.transform.position = transform.position + Vector3.right * 0.1f;
+                bulletL = objectManager.MakeObject("PlayerBulletA");
+                bulletL.transform.position = transform.position + Vector3.left * 0.1f;
                 rigidR = bulletR.GetComponent<Rigidbody2D>();
                 rigidL = bulletL.GetComponent<Rigidbody2D>();
                 rigidR.AddForce(Vector3.up * 10, ForceMode2D.Impulse);
@@ -142,9 +178,12 @@ public class Player : MonoBehaviour
                 break;
             case 3:
                 // 중간 강화
-                bulletC = Instantiate(bulletB, transform.position, transform.rotation);
-                bulletR = Instantiate(bulletA, transform.position + Vector3.right * 0.35f, transform.rotation);
-                bulletL = Instantiate(bulletA, transform.position + Vector3.left * 0.35f, transform.rotation);
+                bulletC = objectManager.MakeObject("PlayerBulletB");
+                bulletC.transform.position = transform.position;
+                bulletR = objectManager.MakeObject("PlayerBulletA");
+                bulletR.transform.position = transform.position + Vector3.right * 0.3f;
+                bulletL = objectManager.MakeObject("PlayerBulletA");
+                bulletL.transform.position = transform.position + Vector3.left * 0.3f;
                 rigidC = bulletC.GetComponent<Rigidbody2D>();
                 rigidR = bulletR.GetComponent<Rigidbody2D>();
                 rigidL = bulletL.GetComponent<Rigidbody2D>();
@@ -185,15 +224,15 @@ public class Player : MonoBehaviour
         else if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
             life--;
-            manager.UpdateLifeIcon(life);
+            gameManager.UpdateLifeIcon(life);
 
             if (life == 0)
-                manager.GameOver();
+                gameManager.GameOver();
             else
-                manager.RespawnPlayer();
+                gameManager.RespawnPlayer();
 
             gameObject.SetActive(false);
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
         }
         else if(collision.gameObject.tag == "Item")
         {
@@ -213,14 +252,14 @@ public class Player : MonoBehaviour
                     if (boom < maxBoom)
                     {
                         boom++;
-                        manager.UpdateBoomIcon(boom);
+                        gameManager.UpdateBoomIcon(boom);
                     }
                     else
                         score += 500;
                     break;
             }
             // 먹은 아이템은 삭제
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
         }
     }
 

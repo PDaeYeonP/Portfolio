@@ -9,22 +9,41 @@ public class Enemy : MonoBehaviour
     public int health;
     public Sprite[] sprites;
     public GameObject player;
+    public ObjectManager objectManager;
     public int enemyScore;
 
     SpriteRenderer spriteRenderer;
 
     public GameObject bulletA;
     public GameObject bulletB;
-    public GameObject[] items;
+    //public GameObject[] items;
     float curFireDelay;
     float maxFireDelay;
+    string[] items;
 
 
     void Awake()
     {
+        items = new string[] { "ItemCoin", "ItemPower", "ItemBoom" };
         spriteRenderer = GetComponent<SpriteRenderer>();
         curFireDelay = 0.0f;
         maxFireDelay = 2.0f;
+    }
+
+    void OnEnable()
+    {
+        switch(enemyLevel)
+        {
+            case 1:
+                health = 10;
+                break;
+            case 2:
+                health = 15;
+                break;
+            case 3:
+                health = 30;
+                break;
+        }
     }
 
     void Update()
@@ -40,10 +59,13 @@ public class Enemy : MonoBehaviour
         if (curFireDelay < maxFireDelay)
             return;
 
+        GameObject test;
+
         if (enemyLevel == 1)
         {
             // 프리팹 복제생성
-            GameObject bullet = Instantiate(bulletA, transform.position, transform.rotation);
+            GameObject bullet = objectManager.MakeObject("EnemyBulletA");
+            bullet.transform.position = transform.position;
             // 리지드바디 할당
             Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
 
@@ -54,7 +76,8 @@ public class Enemy : MonoBehaviour
         else if (enemyLevel == 3)
         {
             // 프리팹 복제생성
-            GameObject bullet = Instantiate(bulletB, transform.position, transform.rotation);
+            GameObject bullet = objectManager.MakeObject("EnemyBulletB");
+            bullet.transform.position = transform.position;
             // 리지드바디 할당
             Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
 
@@ -86,9 +109,12 @@ public class Enemy : MonoBehaviour
             if(random < 3)
             {
                 int index = Random.Range(0, 3);
-                Instantiate(items[index], transform.position, transform.rotation);
+                GameObject item = objectManager.MakeObject(items[index]);
+                item.transform.position = transform.position;
             }
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            // 회전값 초기화
+            transform.rotation = Quaternion.identity;
         }
     }
 
@@ -101,13 +127,15 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "BulletBorder")
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            // 회전값 초기화
+            transform.rotation = Quaternion.identity;
         }
         else if(collision.gameObject.tag == "PlayerBullet")
         {
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
             OnHit(bullet.damage);
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
         }
     }
 }

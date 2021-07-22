@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject[] enemys;
+    string[] enemies;
     public Transform[] spawnPoints;
     public float maxSpawnDelay;
     public float curSpawnDelay;
@@ -16,6 +16,12 @@ public class GameManager : MonoBehaviour
     public Image[] lifeIcon;
     public Image[] boomIcon;
     public GameObject gameOverSet;
+    public ObjectManager objectManager;
+
+    void Awake()
+    {
+        enemies = new string[] { "EnemyLv1", "EnemyLv2", "EnemyLv3" };
+    }
 
     void Update()
     {
@@ -39,10 +45,14 @@ public class GameManager : MonoBehaviour
         int randomEnemy = Random.Range(0, 3);
         int randomPoint = Random.Range(0, 11);
         // 복제 생성
-        GameObject enemy = Instantiate(enemys[randomEnemy], spawnPoints[randomPoint].position, spawnPoints[randomPoint].rotation);
+        // 기존 프리펩 생성문 >> GameObject enemy = Instantiate(enemys[randomEnemy], spawnPoints[randomPoint].position, spawnPoints[randomPoint].rotation);
+        // 오브젝트풀링으로 프리펩 생성문 49, 50줄
+        GameObject enemy = objectManager.MakeObject(enemies[randomEnemy]);
+        enemy.transform.position = spawnPoints[randomPoint].position;
         Rigidbody2D rigid = enemy.GetComponent<Rigidbody2D>();
         Enemy enemyLogic = enemy.GetComponent<Enemy>();
         enemyLogic.player = player;
+        enemyLogic.objectManager = objectManager;
 
         if (randomPoint >= 5 && randomPoint <= 7)
         {
