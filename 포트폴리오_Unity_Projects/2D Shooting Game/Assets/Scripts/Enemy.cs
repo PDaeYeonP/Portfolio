@@ -59,8 +59,6 @@ public class Enemy : MonoBehaviour
         if (curFireDelay < maxFireDelay)
             return;
 
-        GameObject test;
-
         if (enemyLevel == 1)
         {
             // 橇府普 汗力积己
