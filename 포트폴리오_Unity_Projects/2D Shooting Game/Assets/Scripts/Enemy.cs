@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     public GameObject bulletB;
     //public GameObject[] items;
     float curFireDelay;
-    float maxFireDelay;
+    public float maxFireDelay;
     string[] items;
 
 
@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
         items = new string[] { "ItemCoin", "ItemPower", "ItemBoom" };
         spriteRenderer = GetComponent<SpriteRenderer>();
         curFireDelay = 0.0f;
-        maxFireDelay = 2.0f;
+        maxFireDelay = 4.0f;
     }
 
     void OnEnable()

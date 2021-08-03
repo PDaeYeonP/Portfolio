@@ -15,6 +15,7 @@ public class ObjectManager : MonoBehaviour
 
     public GameObject playerBulletA;
     public GameObject playerBulletB;
+    public GameObject followerBullet;
     public GameObject enemyBulletA;
     public GameObject enemyBulletB;
 
@@ -29,6 +30,7 @@ public class ObjectManager : MonoBehaviour
 
     GameObject[] playerBulletsA;
     GameObject[] playerBulletsB;
+    GameObject[] followerBullets;
     GameObject[] enemyBulletsA;
     GameObject[] enemyBulletsB;
 
@@ -46,6 +48,7 @@ public class ObjectManager : MonoBehaviour
 
         playerBulletsA = new GameObject[100];
         playerBulletsB = new GameObject[50];
+        followerBullets = new GameObject[30];
         enemyBulletsA = new GameObject[50];
         enemyBulletsB = new GameObject[50];
 
@@ -97,6 +100,11 @@ public class ObjectManager : MonoBehaviour
             playerBulletsB[index] = Instantiate(playerBulletB);
             playerBulletsB[index].SetActive(false);
         }
+        for (int index = 0; index < followerBullets.Length; index++)
+        {
+            followerBullets[index] = Instantiate(followerBullet);
+            followerBullets[index].SetActive(false);
+        }
         for (int index = 0; index < enemyBulletsA.Length; index++)
         {
             enemyBulletsA[index] = Instantiate(enemyBulletA);
@@ -136,6 +144,9 @@ public class ObjectManager : MonoBehaviour
                 break;
             case "PlayerBulletB":
                 targetPool = playerBulletsB;
+                break;
+            case "FollowerBullet":
+                targetPool = followerBullets;
                 break;
             case "EnemyBulletA":
                 targetPool = enemyBulletsA;
@@ -184,6 +195,9 @@ public class ObjectManager : MonoBehaviour
                 break;
             case "PlayerBulletB":
                 targetPool = playerBulletsB;
+                break;
+            case "FollowerBullet":
+                targetPool = followerBullets;
                 break;
             case "EnemyBulletA":
                 targetPool = enemyBulletsA;

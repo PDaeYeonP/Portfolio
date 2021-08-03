@@ -155,10 +155,8 @@ MonoBehaviour:
   - {fileID: 8414478535512612329, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
   - {fileID: 4326287474489854147, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
   player: {fileID: 0}
+  objectManager: {fileID: 0}
   enemyScore: 150
   bulletA: {fileID: 5259750125951937133, guid: 7d2fe780b30d5a94085edb81c0a4483f, type: 3}
   bulletB: {fileID: 5259750125951937133, guid: 5247d25f0be807f49a7994fa46844bed, type: 3}
-  items:
-  - {fileID: 1926861339428836658, guid: ae4e5c9c61813514888ce25df50e0cf6, type: 3}
-  - {fileID: 7546589614739032239, guid: 65c2f66fc8f338348b6dabcef7dca203, type: 3}
-  - {fileID: 1617440283570684911, guid: d6e2738695e93bf48bbb2cf2bafe1d63, type: 3}
+  maxFireDelay: 4

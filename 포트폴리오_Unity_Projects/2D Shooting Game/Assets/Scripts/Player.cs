@@ -28,13 +28,15 @@ public class Player : MonoBehaviour
     bool isTouchLeft;
     bool isTouchRight;
 
+    public GameObject[] followers;
+
     void Awake()
     {
         anim = GetComponent<Animator>();
         curFireDelay = 0.0f;
         maxFireDelay = 0.15f;
         power = 1;
-        maxPower = 3;
+        maxPower = 6;
         boom = 0;
         maxBoom = 2;
         isBoom = false;
@@ -176,7 +178,7 @@ public class Player : MonoBehaviour
                 rigidR.AddForce(Vector3.up * 10, ForceMode2D.Impulse);
                 rigidL.AddForce(Vector3.up * 10, ForceMode2D.Impulse);
                 break;
-            case 3:
+            default:
                 // 중간 강화
                 bulletC = objectManager.MakeObject("PlayerBulletB");
                 bulletC.transform.position = transform.position;
@@ -244,7 +246,10 @@ public class Player : MonoBehaviour
                     break;
                 case "Power":
                     if (power < maxPower)
+                    {
                         power++;
+                        AddFollower();
+                    }
                     else
                         score += 300;
                     break;
@@ -261,6 +266,16 @@ public class Player : MonoBehaviour
             // 먹은 아이템은 삭제
             collision.gameObject.SetActive(false);
         }
+    }
+
+    void AddFollower()
+    {
+        if(power == 4)
+            followers[0].SetActive(true);
+        else if(power == 5)
+            followers[1].SetActive(true);
+        else if (power == 6)
+            followers[2].SetActive(true);
     }
 
     void offBoomEffect()
