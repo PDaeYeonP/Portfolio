@@ -1,10 +1,11 @@
 ### !!새 계정, 새 저장소로 이사완료
 ### !!해당 페이지에서 포트폴리오 기록합니다.
-### !!예전 계정 저장소(기록 보존용) 페이지는 >>>https://github.com/DaeYeon24/Portfolio <<<
+### !!예전 계정 저장소(기록 보관용) 페이지는 >>>https://github.com/DaeYeon24/Portfolio <<<
+## *C, C++, WinAPI 파일 보관용
 <br><br>
 
 # 개인 포트폴리오 전용 Git
-## 유니티 프로젝트, CPP_WinAPI 프로젝트
+## 유니티 프로젝트, CPP_WinAPI 프로젝트(예전 계정)
 <br><br>
 
 ### ! 공지사항 !
