@@ -30,9 +30,14 @@ public class Player : MonoBehaviour
         // 받은 입력값으로 오브젝트 힘 부여
         playerRigidbody.AddForce(new Vector3(xInput * Time.deltaTime, 0, zInput * Time.deltaTime), ForceMode.Impulse);
         //
-        // (!수정사항) : 점프는 Update함수로 따로 빼야될 듯. 같은 FixedUpdate에 있으니까 방향키 입력과 동시에 점프키 먹힘.
-        // 다음 버전에서 Update 함수로 옮기고 빌딩하기
-        //
+    }
+
+    void Update()
+    {
+        // UI 스타트 전이면 리턴
+        if (!UIManager.getInstance.powerOn)
+            return;
+
         // 점프키를 누르고 최대점프수가 아니라면
         if (Input.GetButtonDown("Jump") && jumpCount < 2)
         {
@@ -47,7 +52,6 @@ public class Player : MonoBehaviour
         else if (Input.GetButtonUp("Jump") && playerRigidbody.velocity.y > 0)
             playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
     }
-
     void OnCollisionEnter(Collision collision)
     {
         // 플랫폼 floor 오브젝트에 충돌했을때 점프상태 필드 초기화

@@ -11,16 +11,15 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
-    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.IK.Runtime.dll:
     - UnityEditor.U2D.IK.IKEditorManagerHelper
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
+    - UnityEditor.Tilemaps.GridBrushEditor
     - UnityEditor.Tilemaps.GridPaintPaletteClipboard
     - UnityEditor.Tilemaps.GridPaintPaletteWindow
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
-    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.PaintableSceneViewGrid
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
@@ -85,33 +84,33 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 612}
+      Script: {instanceID: 630}
     - Class: 114
-      Script: {instanceID: 1494}
+      Script: {instanceID: 1514}
     - Class: 114
-      Script: {instanceID: 1816}
+      Script: {instanceID: 1890}
     - Class: 114
-      Script: {instanceID: 2082}
+      Script: {instanceID: 2204}
     - Class: 114
-      Script: {instanceID: 2248}
+      Script: {instanceID: 2392}
     - Class: 114
-      Script: {instanceID: 2454}
+      Script: {instanceID: 2620}
     - Class: 114
-      Script: {instanceID: 2600}
+      Script: {instanceID: 2780}
     - Class: 114
-      Script: {instanceID: 2776}
+      Script: {instanceID: 3000}
     - Class: 114
-      Script: {instanceID: 2986}
+      Script: {instanceID: 3242}
     - Class: 114
-      Script: {instanceID: 3088}
+      Script: {instanceID: 3354}
     - Class: 114
-      Script: {instanceID: 3754}
+      Script: {instanceID: 4098}
     - Class: 114
-      Script: {instanceID: 3932}
+      Script: {instanceID: 4324}
     - Class: 114
-      Script: {instanceID: 4742}
+      Script: {instanceID: 5264}
     - Class: 114
-      Script: {instanceID: 5062}
+      Script: {instanceID: 5624}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -221,7 +220,7 @@ ScriptsOnlyBuild:
     className: Shadow
   - hash:
       serializedVersion: 2
-      Hash: f0786811516f7de8befd7a3e181e567a
+      Hash: 300fd99066f8c288e85f5e81ce65fe34
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_FontAsset
@@ -239,7 +238,7 @@ ScriptsOnlyBuild:
     className: GroupTrack
   - hash:
       serializedVersion: 2
-      Hash: d791aa6007fa3640be1164ea75bb087d
+      Hash: 800c50acba124432abb4cf0d47202e06
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_StyleSheet
@@ -473,7 +472,7 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: a2612813f45d0ced02c3e4bc9dbea8b4
+      Hash: da4cc51a02ce84afe2cecd27cfe6997a
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextMeshPro
@@ -666,6 +665,12 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Unity.2D.Animation.Runtime.dll
+    namespaceName: UnityEngine.U2D.Animation
+    className: BufferManager
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Coin
@@ -708,4 +713,5 @@ ScriptsOnlyBuild:
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: "C:/Users/eodus/Desktop/2D \uD50C\uB7AB\uD3EC\uBA38/2D Project.exe"
+  playerPath: "D:/Portfolio/\uD3EC\uD2B8\uD3F4\uB9AC\uC624_Unity_exe/2D_Platform/2D
+    Project.exe"
